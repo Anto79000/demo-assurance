@@ -2,10 +2,13 @@ package com.example.postgresdemo.repository;
 
 import com.example.postgresdemo.model.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
-@Repository
-public interface AnswerRepository extends JpaRepository<Answer, Long> {
-    List<Answer> findByQuestionId(Long questionId);
+@Component
+public class AnswerRepository {
+    public List<Answer> findByQuestionId(Long questionId) {
+        return null;
+    };
 }
