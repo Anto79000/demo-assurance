@@ -1,7 +1,8 @@
-package com.example.postgresdemo.model;
+package com.example.postgresdemo.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+
 
 import java.util.UUID;
 

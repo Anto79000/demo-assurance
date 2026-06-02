@@ -1,4 +1,4 @@
-package com.example.postgresdemo.model;
+package com.example.postgresdemo.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -55,16 +55,5 @@ public class Risque {
 
     public LocalDate getDateFin() {
         return dateFin;
-    }
-
-    public void test(){
-        Voiture voit = new Voiture("123-ab-123","RENAULT", "CLIO");
-        voit.setImmatriculation("toto");
-        voit.getImmatriculation();
-
-        Voiture voit2 = new Voiture("az-3-rt", "Mercedes", "Class A");
-        String immatriculation = voit.getImmatriculation();
-        voit2.setImmatriculation(immatriculation);
-        voit2.setImmatriculation(voit.getImmatriculation());
     }
 }
