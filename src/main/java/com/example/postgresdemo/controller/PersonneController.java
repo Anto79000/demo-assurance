@@ -1,7 +1,7 @@
 package com.example.postgresdemo.controller;
 
-import com.example.postgresdemo.repository.adapter.PersonneAdapter;
-import com.example.postgresdemo.repository.model.Personne;
+import com.example.postgresdemo.infrastructure.adapter.PersonneAdapter;
+import com.example.postgresdemo.infrastructure.model.Personne;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

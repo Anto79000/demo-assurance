@@ -1,6 +1,9 @@
-package com.example.postgresdemo.repository.model;
+package com.example.postgresdemo.infrastructure.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 
 import java.util.UUID;

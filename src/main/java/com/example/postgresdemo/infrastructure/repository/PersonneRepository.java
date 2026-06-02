@@ -1,6 +1,6 @@
-package com.example.postgresdemo.repository;
+package com.example.postgresdemo.infrastructure.repository;
 
-import com.example.postgresdemo.repository.model.Personne;
+import com.example.postgresdemo.infrastructure.model.Personne;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

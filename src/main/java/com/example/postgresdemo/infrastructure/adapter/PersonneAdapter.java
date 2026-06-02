@@ -1,7 +1,7 @@
-package com.example.postgresdemo.repository.adapter;
+package com.example.postgresdemo.infrastructure.adapter;
 
-import com.example.postgresdemo.repository.PersonneRepository;
-import com.example.postgresdemo.repository.model.Personne;
+import com.example.postgresdemo.infrastructure.model.Personne;
+import com.example.postgresdemo.infrastructure.repository.PersonneRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
