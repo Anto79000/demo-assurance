@@ -6,8 +6,10 @@ import com.example.postgresdemo.infrastructure.model.Risque;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,8 +33,8 @@ public class RisqueController {
     }
 
     @GetMapping("/risques")
-    ResponseEntity<List<Risque>> getRisques() {
-        final List<Risque> risques = risqueAdapter.findAll();
+    ResponseEntity<List<Risque>> getRisques(@RequestParam(required = false) LocalDate dateRecherche) {
+        final List<Risque> risques = risqueAdapter.findAll(dateRecherche);
         if (risques == null || risques.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

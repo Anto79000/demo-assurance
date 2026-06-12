@@ -20,7 +20,7 @@ public class ContratController {
         this.contratAdapter = contratAdapter;
     }
 
-    @GetMapping(path = "/contrat/{id}")
+    @GetMapping(path = "/contrats/{id}")
     ResponseEntity<Contrat> getContrat(@PathVariable UUID id) {
         final Contrat contrat = contratAdapter.findById(id);
         if (contrat == null) {
