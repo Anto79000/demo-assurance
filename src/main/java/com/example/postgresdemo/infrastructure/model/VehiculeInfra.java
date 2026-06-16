@@ -8,7 +8,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "vehicule")
 @Getter
-public class Vehicule {
+public class VehiculeInfra {
 
     @Id
     @GeneratedValue

@@ -21,7 +21,7 @@ public class Contrat {
 
     @ManyToOne
     @JoinColumn(name = "id_risque")
-    private Risque risque;
+    private RisqueInfra risqueInfra;
 
     @Column(nullable = false)
     private String typeContrat;

@@ -1,7 +1,9 @@
 package com.example.postgresdemo.infrastructure.adapter;
 
 
-import com.example.postgresdemo.infrastructure.model.Risque;
+import com.example.postgresdemo.domain.model.Risque;
+import com.example.postgresdemo.infrastructure.mapper.RisqueMapper;
+import com.example.postgresdemo.infrastructure.model.RisqueInfra;
 import com.example.postgresdemo.infrastructure.repository.RisqueRepository;
 import org.springframework.stereotype.Component;
 
@@ -14,42 +16,46 @@ import java.util.UUID;
 @Component
 public class RisqueAdapter {
     private final RisqueRepository risqueRepository;
+    private final RisqueMapper risqueMapper;
 
-    public RisqueAdapter(RisqueRepository risqueRepository) {
+    public RisqueAdapter(RisqueRepository risqueRepository, RisqueMapper risqueMapper) {
         this.risqueRepository = risqueRepository;
+        this.risqueMapper = risqueMapper;
     }
 
     public Risque findById(UUID id) {
-        return risqueRepository.getReferenceById(id);
+        RisqueInfra res = risqueRepository.getReferenceById(id);
+        return risqueMapper.toDomain(res);
+
     }
 
     public List<Risque> findAll(LocalDate dateRecherche) {
-        List<Risque> risques = risqueRepository.findAll(); // L'ensemble des risques de ma table RISQUE
+        List<RisqueInfra> risqueInfras = risqueRepository.findAll(); // L'ensemble des risques de ma table RISQUE
 
         if (dateRecherche == null) {
-            return risques;
+            return risqueMapper.toDomain(risqueInfras);
         }
-        List<Risque> result = new ArrayList<>(); // Ma liste de risques que je veux renvoyer
+        List<RisqueInfra> result = new ArrayList<>(); // Ma liste de risques que je veux renvoyer
 
         // faire une boucle for qui va m'ajouter dans ma liste result tous les Risques pour lesquels la méthode
         // rechercheDate est vraie
-        for (int i = 0; i < risques.size(); i++) {
-            Risque risque = risques.get(i);
-            System.out.println(risque);
-            if (rechercheDate(risque, dateRecherche)) {
-                result.add(risque);
+        for (int i = 0; i < risqueInfras.size(); i++) {
+            RisqueInfra risqueInfra = risqueInfras.get(i);
+            System.out.println(risqueInfra);
+            if (rechercheDate(risqueInfra, dateRecherche)) {
+                result.add(risqueInfra);
             }
         }
 
-        return result;
+        return risqueMapper.toDomain(result);
     }
 
 
-    private boolean rechercheDate(Risque risque, LocalDate dateRecherche) {
-        return (risque.getDateEffet().isBefore(dateRecherche) || risque.getDateEffet().isEqual(dateRecherche))
+    private boolean rechercheDate(RisqueInfra risqueInfra, LocalDate dateRecherche) {
+        return (risqueInfra.getDateEffet().isBefore(dateRecherche) || risqueInfra.getDateEffet().isEqual(dateRecherche))
                 &&
-                (risque.getDateFin() == null
-                        || (risque.getDateFin().isAfter(dateRecherche) || risque.getDateFin().isEqual(dateRecherche)));
+                (risqueInfra.getDateFin() == null
+                        || (risqueInfra.getDateFin().isAfter(dateRecherche) || risqueInfra.getDateFin().isEqual(dateRecherche)));
 
     }
 }

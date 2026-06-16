@@ -11,7 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "habitation")
 @Getter
-public class Habitation {
+public class HabitationInfra {
 
     @Id
     @GeneratedValue
