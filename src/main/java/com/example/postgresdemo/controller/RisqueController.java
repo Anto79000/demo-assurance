@@ -1,13 +1,14 @@
 package com.example.postgresdemo.controller;
 
 
+import com.example.postgresdemo.controller.model.ResourceWrapper;
 import com.example.postgresdemo.domain.model.Risque;
-import com.example.postgresdemo.infrastructure.adapter.RisqueAdapter;
+import com.example.postgresdemo.domain.model.RisqueAEnregistrer;
+import com.example.postgresdemo.domain.service.RisqueService;
+import com.example.postgresdemo.exception.RisqueIncoherentException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,29 +16,40 @@ import java.util.UUID;
 
 
 @RestController
+@RequestMapping("/risques")
+@RequiredArgsConstructor
 public class RisqueController {
 
-    private final RisqueAdapter risqueAdapter;
+    private final RisqueService risqueService;
 
-    public RisqueController(RisqueAdapter risqueAdapter) {
-        this.risqueAdapter = risqueAdapter;
-    }
-
-    @GetMapping(path = "/risques/{id}")
+    @GetMapping(path = "/{id}")
     ResponseEntity<Risque> getRisque(@PathVariable UUID id) {
-        final Risque risqueInfra = risqueAdapter.findById(id);
-        if (risqueInfra == null) {
+        final Risque risque = risqueService.findById(id);
+        if (risque == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(risqueInfra);
+        return ResponseEntity.ok(risque);
     }
 
-    @GetMapping("/risques")
+    @GetMapping
     ResponseEntity<List<Risque>> getRisques(@RequestParam(required = false) LocalDate dateRecherche) {
-        final List<Risque> risqueInfras = risqueAdapter.findAll(dateRecherche);
-        if (risqueInfras == null || risqueInfras.isEmpty()) {
+        final List<Risque> risques = risqueService.findAll(dateRecherche);
+        if (risques == null || risques.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(risqueInfras);
+        return ResponseEntity.ok(risques);
+    }
+
+    @PostMapping
+    @ResponseBody
+    ResponseEntity<?> postRisque(@RequestBody RisqueAEnregistrer risqueAEnregistrer) {
+        try {
+            final Risque risque = risqueService.postRisque(risqueAEnregistrer);
+            return ResponseEntity.ok(risque); // <-- retourne directement l'objet
+        } catch (RisqueIncoherentException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ResourceWrapper.error(e.getMessage())); // <-- wrapper uniquement pour l'erreur
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.postgresdemo.infrastructure.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "risque")
 @Getter
+@Setter
 public class RisqueInfra {
 
     @Id
@@ -25,9 +27,6 @@ public class RisqueInfra {
 
     private String typeRisque;
     private String codeEtat;
-
     private LocalDate dateEffet;
     private LocalDate dateFin;
-
-
 }
